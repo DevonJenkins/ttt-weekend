@@ -12,18 +12,6 @@
       [2, 4, 6],
     ]
 
-
-
-/* --------------------set messages as constants for code brevity-----------------*/
-//const winMessage = `${currentPlayer} has won!!!!`;
-//const drawMessage =  ;
-//const currentTurnMessage =   ;
- const player1Message = "Take your turn player 1" ;
-
-
-
-
-
 /*---------------------------- Variables (state) ----------------------------*/
 // 1) Define the required variables used to track the state of the game:
   // None of these variables will need to hold a value when they are defined
@@ -40,12 +28,12 @@
 
 
 
-let gameBoard = ["", "", "", "", "", "", "", "", ""];
+let gameBoard = [null, null,null,null,null,null,null,null,null,];
 
 
-let turn = null //will be 1 or 2 depending on whose turn it is 
+let turn = '' //will be 1 or 2 depending on whose turn it is 
 //let winner = playerWon, tie, gameInPlay   
-let currentPlayer = null; 
+let isWinner = null; 
 
 
 //let sq0= (gameBoard[i] === 0) 
@@ -53,111 +41,104 @@ let currentPlayer = null;
 
 
 
+
+/* --------------------set messages as constants for code brevity-----------------*/
+
+//const winMessage = `${currentPlayer} has won!!!!`;
+const drawMessage =  'its a tie. Play again.';
+//currentTurnMessage =   ;
+ const player1Message = "Take your turn player 1" ;
+ const player2Message = "Take your turn player 2" ;
+
+
+
 /*------------------------ Cached Element References ------------------------*/
-// 2) Store cached element references on the page that will be accessed in code more than once in variables to make code more concise, readable, and performant:
-	
-	// 2.1) Store the 9 elements that represent the squares on the page.
-	  // You may want to give each square a class name in your HTML to make this easier!
 
-	// 2.2) Store the element that displays the game status on the page.
   gameStatusMessage = document.querySelector("#message")
-
-    cell = document.querySelector(".cell")
-    board = document.querySelector('.board')
-
-    resetButton = document.querySelector('#reset')
+  board = document.querySelector('.board')
+  cell = board.querySelectorAll('#cell')
+  resetButton = document.querySelector('#reset')
 
 
 /*----------------------------- Event Listeners -----------------------------*/
-
+cell.forEach((cell)=> {
+  cell.addEventListener('click', handleClick)
+})
 
 board.addEventListener('click', handleClick)
 resetButton.addEventListener('click', init())
-cell.addEventListener('click', console.log('hello'))
 
 
 /*-------------------------------- Functions --------------------------------*/
-// 3) Upon loading, the app should:
 
-	// 3.1) Call an initialize function
   init()
-
-
-
   
-  
-  ///this will have to move within the render function i think 
-  
-  function handleClick(evt) {
-    if(turn === 1){
-    evt.target.textContent = 'X' 
-    }
-    else if(turn === 2){
-    evt.target.textContent = 'O' 
-    }else {evt.target.textContent = ''} 
 
-    console.log(turn)
-
-    //handleTurn()
-
+function sayHi(){
+  console.log('hello')
 }
   
+
   
 
 
   function init(){
-          gameStatusMessage.textContent = player1Message
-          
-
-
-
-    //initalize state variables
-      //set the nine cells to null
-      sq0.value = null
-      sq1.value = null
-      sq2.value = null
-      sq3.value = null
-      sq4.value = null
-      sq5.value = null
-      sq6.value = null
-      sq7.value = null
-      sq8.value = null
-
-      //index of 0 is the top left square -> ++ index of 8 is the top right square
-
-      //9 elements will map to each corresponding square
-
-
-    turn = 1
-
-  winner = null 
+  
+      gameBoard = [null,null,null,null,null,null,null,null,null,]
+      turn = 1
+      winner = null 
     
-
-	// 3.2) That initialize function should initialize the state variables:
-	  // 3.2.1) Initialize the board array to 9 nulls to represent empty squares. 
-	    // The 9 elements will "map" to each square.
-	    // Index 0 represents the top-left square.
-	    // Index 1 represents the top-middle square.
-			// So on, continuing through the entire board until...
-	    // Index 8 maps to the bottom-right square.
-	  // 3.2.2) Initialize whose turn it is to 1 (player 'X'). 
-	    // Player 'O' will be represented by -1.
-	  // 3.2.3) Initialize the winner variable to null.
-	    // This represents that there is no winner or tie yet. 
-	    // The winner variable will hold the player value (1 or -1) if there's a winner. 
-	    // The winner will hold a 'T' if there's a tie.
-	  // 3.2.4) Render those state variables to the page by calling a render function.
-    render();
+      render();
 
   }
 
   
-    function render(){
-      
+
+      function render() {
+        gameBoard.forEach((cell, idx) => {
+          //let cellColor
+          let cellLetter
+
+          if (cell === 1) {
+            //cellColor = 'orange'
+            cellLetter = 'X'
+          } else if (cell === -1) {
+            //cellColor = 'blue'
+            cellLetter = 'O'
+          } else if (cell === null) {
+            //cellColor = 'white'
+            cellLetter = ''
+        }
+        //cell[idx].style.background = cellColor
+        cell[idx].style.textContent= cellLetter 
+        
+    })
+
+
+    //   if (turn = 1){
+    //   gameStatusMessage.textContent = player1Message
+    // } else if (turn = 2){
+
+    //   gameStatusMessage.textContent = player2Message
+    // } 
+    
+    // if(turn === 1){
+        
+    //   evt.target.textContent = 'X' 
+    
+    //     //evt.taget.value = 1
+    //     }
+    //     else if(turn === -1){
+    //     evt.target.textContent = 'O' 
+    // }
+  }
+
+
+
       // 3.3) The render function should:
         // 3.3.1) Loop over the board array (which represents the squares on the page), and for each iteration:
 
-        for(i = 0; i < 8; i++){}
+        //for(i = 0; i < 8; i++){}
           // 3.3.1.1) Use the index of the iteration to access the square in the squares array that corresponds with the current cell being iterated over in the board array
           // 3.3.1.2) Style that square however you wish dependant on the value contained in the current cell being iterated over (-1, 1, or null)
         // 3.3.2) Render a message reflecting the currrent game state:
@@ -168,15 +149,50 @@ cell.addEventListener('click', console.log('hello'))
             // Hint (again): Maybe use a ternary inside a template literal here
     
         // 3.4) After completing this step, you should be able to manually change the values held in the board array in the initialization function and see the style of the corresponding square change on your page.
+  
+
+  function handleClick(evt) {
+    let cellIdx = parseInt(evt.target.id.replace('sq', ''))
+    
+    if (gameBoard[cellIdx] || (isWinner = true) ) {return 
+    }
+
+    // buttonClick = true
+    // if(turn === 1){
+    // evt.target.textContent = 'X' 
+
+    // //evt.taget.value = 1
+    // }
+    // else if(turn === -1){
+    // evt.target.textContent = 'O' 
+
+
+    // //evt.target.value = -1
+    // }else {evt.target.textContent = ''} 
+
+    // console.log(turn)   
+    // console.log(gameBoard)
+    
+    render()
+
   }
   
-  
-  
+  function handleTurn(){
+
+    if (buttonClick = true )
+{ turn = turn * -1}
+  }
+
+
+  //   if ((turn = 1 ) && (buttonClick = true)) {      (turn = turn * -1 )   && (buttonClick = false )
+
+  //   }else if((turn = -1) && (buttonClick = true)){
+  //         (turn = turn * -1) && (buttonClick = false)
+  //   }
+  // }
   
   
 
-///if turn === 1 { on click turn===2}
-//else if turn === 2 { on click turn === 3 }
 
 
 
