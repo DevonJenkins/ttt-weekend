@@ -24,23 +24,14 @@ let isWinner, gameBoard, playerTurn
 /*------------------------ Cached Element References ------------------------*/
 const message = document.querySelector('#message')
 const gameStatusTxt = document.querySelector('#message')
-// const gameBoard = document.querySelector('#board')
-
-
-
 let cells = document.querySelectorAll('.cell')
-
 const resetBtn = document.querySelector('#reset')
 
-
 /*----------------------------- Event Listeners -----------------------------*/
-
 
 cells.forEach((cell) => {
 	cell.addEventListener('click', handleClick)
 })
-
-
 
 /*-------------------------------- Functions --------------------------------*/
 
@@ -66,7 +57,7 @@ function render() {
 		} else if (gameBoard[idx] === null) {
 			cellLetter = ''
 		}
-		cells[idx].innerHTML = cellLetter
+		cells[idx].textContent = cellLetter
 	})
 
 	if (!isWinner) {
